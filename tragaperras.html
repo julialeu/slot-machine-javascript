@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Máquina tragaperras</title>
+    <link rel="stylesheet" href="tragaperras.css">
+    <script src="tragaperras.js"></script>
+</head>
+<body>
+<h2>Introduce monedas:</h2>
+
+<div style="width: 150px;">
+    <div class="t">
+        <input id="numeroMonedasIntroducidas" type="text"/>
+    </div>
+    <input id="botonIntroducirMonedas" onclick="introducirMonedas()" type="button" value="Introducir"/>
+    <br>
+</div>
+<div>
+    <p>El número actual de monedas es:</p>
+    <div class="numMonedasActuales" id="numMonedasActuales">
+        0
+    </div>
+    <br><br>
+    <input id="botonDeSalida" onclick="salir()" type="button" value="Salir"/>
+</div>
+<div id="pantallas">
+    <img src="/img/pingu.png" alt="pingu" width="200" height="200" class="pantallas" >
+    <img src="/img/pingu.png" alt="pingu" width="200" height="200" class="pantallas">
+    <img src="/img/pingu.png" alt="pingu" width="200" height="200" class="pantallas">
+    <img src="/img/palancaUP.png" alt="palanca" width="200" height="200" class="palanca">
+
+</div>
+<div>
+    <h3>Historial de movimientos</h3>
+    <ul id="historial">
+
+    </ul>
+</div>
+</body>
+</html>

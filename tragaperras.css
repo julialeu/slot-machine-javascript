@@ -1,0 +1,21 @@
+div { display: table; margin: 4px; padding: 1px; }
+div.t {
+    display: table-cell;
+    width: 100%;
+}
+div.t > input {
+    margin: 1px;
+}
+
+.numMonedasActuales {
+    font-size: xxx-large;
+}
+
+.pantallas {
+    border: 1px solid;
+    margin-left: 4px;
+}
+
+.palanca {
+    margin-left: 20px;
+}
