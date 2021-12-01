@@ -1,25 +1,39 @@
+//Array de imágenes
 var listaImagenes = ["aubergine", "banana", "carrots", "cherries",
     "dollar", "lemon", "orange", "peach",
     "potato", "tomato"];
 
+/*Array de frutas y verduras. Se utiliza cuando
+llamamos al método calcularPremio. Únicamente para el supuesto
+de que salgan 2 o 3 frutas u hortalizas iguales.
+ */
 var listaFrutasYHortalizas = ["aubergine", "banana", "carrots", "cherries",
     "lemon", "orange", "peach", "potato", "tomato"];
 
-let numeroMonedasActual = 0;
+
+let numeroMonedasActual = 0; //Variable global con el que trabajaremos en diferentes partes del código
 
 function introducirMonedas() {
+    //Creamos una variable al que se le asigna el elemento de html con dicho ID.
     let botonIntroducirElement = document.getElementById('botonIntroducirMonedas');
+    //Deshabilitamos el botón en el momento en que hacemos click en introducir (onClick)
     botonIntroducirElement.disabled = true;
 
-
+    /* Creamos la variable al que se le asigna el número de monedas introducidas.
+    Se emplea el método parseInt porque el número introducido es un string. */
     let numeroMonedasIntroducidas = parseInt(document.getElementById('numeroMonedasIntroducidas').value);
     console.log('Número de monedas introducidas', numeroMonedasIntroducidas);
     numeroMonedasActual = numeroMonedasActual + numeroMonedasIntroducidas;
     console.log('Número de monedas actual', numeroMonedasActual);
-    mostrarNumeroMonedasActuales();
+    mostrarNumeroMonedasActuales(); //Método para mostrar el número de monedas por pantalla
 
+    //Cuando introducimos monedas llamamos al método que muestra mensajes en el historial
     añadirMensaje('Has introducido monedas');
 
+    //Se inhabilita la casilla donde introducimos el número de monedas cuando damos a introducir
+    let numeroMonedasIntroducidasElement = document.getElementById('numeroMonedasIntroducidas');
+    numeroMonedasIntroducidasElement.disabled = true;
+    numeroMonedasIntroducidasElement.value = 0;
 }
 
 function mostrarNumeroMonedasActuales() {
@@ -34,14 +48,21 @@ function salir() {
     mostrarNumeroMonedasActuales();
     console.log('Número de monedas actual', numeroMonedasActual);
 
+    let botonVolverIntroducirMonedas = document.getElementById('botonIntroducirMonedas');
+    botonVolverIntroducirMonedas.disabled = false;
+
+    let numeroMonedasIntroducidasElement = document.getElementById('numeroMonedasIntroducidas');
+    numeroMonedasIntroducidasElement.disabled = false;
+
+
 }
 
 function añadirMensaje(mensajeTexto) {
-    let historialElement = document.getElementById('historial');
-    let mensajeElement = document.createElement('li');
-    mensajeElement.innerHTML = mensajeTexto;
+    let historialElement = document.getElementById('historial'); //El historial es un ol
+    let mensajeElement = document.createElement('li');//Item del ol
+    mensajeElement.innerHTML = mensajeTexto; //El mensaje que le pasamos por parámetro cuando llamamos a la función.
 
-    historialElement.appendChild(mensajeElement);
+    historialElement.appendChild(mensajeElement);//Se añade el nodo li en el padre ol (historial de movimientos).
 }
 
 function bajarPalanca() {
@@ -50,7 +71,7 @@ function bajarPalanca() {
         return;
     }
     numeroMonedasActual = numeroMonedasActual - 1;
-    document.getElementById('numMonedasActuales').innerHTML = numeroMonedasActual;
+    mostrarNumeroMonedasActuales();
 
     if (numeroMonedasActual === 0) {
         document.getElementById('botonIntroducirMonedas').disabled = false;
@@ -87,6 +108,8 @@ function subirPalanca() {
     let premio = calcularPremio(fruta1, fruta2, fruta3);
 
     numeroMonedasActual = numeroMonedasActual + premio;
+
+    mostrarNumeroMonedasActuales();
 }
 
 function calcularPremio(img1, img2, img3) {
@@ -101,6 +124,34 @@ function calcularPremio(img1, img2, img3) {
         añadirMensaje('¡Tres hortalizas iguales! Ganas 5 monedas.');
 
         return 5;
+    }
+
+    // 2 hortalizas o 2 frutas iguales
+    if(hayExactamenteDosFrutasIguales(img1, img2, img3)) {
+        añadirMensaje('¡Dos frutas u hortalizas iguales! Ganas 2 monedas.');
+
+        return 2;
+    }
+
+    //3 monedas
+    if(hayTresMonedas(img1, img2, img3)) {
+        añadirMensaje('¡Tres monedas! Ganas 10 monedas.');
+
+        return 10;
+    }
+
+    //2 monedas
+    if(hayDosMonedas(img1, img2, img3)) {
+        añadirMensaje('¡Dos monedas! Ganas 4 monedas.');
+
+        return 4;
+    }
+
+    //1 moneda
+    if(hayUnaMoneda(img1, img2, img3)) {
+        añadirMensaje('¡Una moneda! Ganas 1 moneda.');
+
+        return 1;
     }
 
     return 0;
@@ -175,4 +226,41 @@ function hayExactamenteTresDeEsteTipo(tipo, img1, img2, img3) {
     }
 
     return false;
+}
+
+function hayTresMonedas(img1, img2, img3) {
+
+    if (img1 === 'dollar' && img2 === 'dollar' && img3 === 'dollar') {
+        return true;
+    }
+
+    return false;
+}
+
+function hayDosMonedas(img1, img2, img3) {
+
+    let moneda = 'dollar';
+
+    if (img1 === moneda && img2 === moneda && img3 !== moneda) {
+        return true;
+    }
+
+    if (img1 === moneda && img2 !== moneda && img3 === moneda) {
+        return true;
+    }
+
+    if (img1 !== moneda && img2 === moneda && img3 === moneda) {
+        return true;
+    }
+
+    return false;
+}
+
+function hayUnaMoneda(img1, img2, img3) {
+    if (img1 === 'dollar' || img2 === 'dollar' || img3 === 'dollar') {
+        return true;
+    }
+
+    return false;
+
 }
