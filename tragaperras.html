@@ -4,25 +4,33 @@
     <meta charset="UTF-8">
     <title>Máquina tragaperras</title>
     <link rel="stylesheet" href="tragaperras.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Open+Sans:ital,wght@1,700&family=Roboto:wght@100&display=swap"
+          rel="stylesheet">
     <script src="tragaperras.js"></script>
 </head>
 <body>
+
+<h1 class="titulo">¡¡Máquina tragaperras!!</h1>
 <h2>Introduce monedas:</h2>
 
-<div style="width: 150px;">
-    <div class="t">
+<div class="introducirMonedas" style="width: 150px;">
+    <div>
         <input id="numeroMonedasIntroducidas" type="text"/>
     </div>
-    <input id="botonIntroducirMonedas" onclick="introducirMonedas()" type="button" value="Introducir"/>
+    <!--Evento onclick para ejecutar la función introducirMonedas cuando se hace click en introducir -->
+    <input class="boton" id="botonIntroducirMonedas" onclick="introducirMonedas()" type="button" value="Introducir"/>
     <br>
 </div>
-<div>
+<div class="monedas">
     <p>El número actual de monedas es:</p>
     <div class="numMonedasActuales" id="numMonedasActuales">
         0
     </div>
     <br><br>
-    <input id="botonDeSalida" onclick="salir()" type="button" value="Salir"/>
+    <!--Evento onclick para ejecutar la función salir -->
+    <input id="botonDeSalida" onclick="salir()" type="button" value="Salir"/><br><br>
 </div>
 <div id="pantallas">
     <img src="/img/pingu.png"
@@ -45,7 +53,7 @@
     >
 
 </div>
-<div>
+<div class="historial">
     <h3>Historial de movimientos</h3>
     <ul id="historial">
 

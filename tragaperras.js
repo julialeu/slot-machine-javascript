@@ -14,14 +14,20 @@ var listaFrutasYHortalizas = ["aubergine", "banana", "carrots", "cherries",
 let numeroMonedasActual = 0; //Variable global con el que trabajaremos en diferentes partes del código
 
 function introducirMonedas() {
+    /* Creamos la variable al que se le asigna el número de monedas introducidas.
+   Se emplea el método parseInt porque el número introducido es un string. */
+    let numeroMonedasIntroducidas = parseInt(document.getElementById('numeroMonedasIntroducidas').value);
+    //Debemos contemplar el supuesto de que se introduzca 0 monedas y un NaN
+    if (isNaN(numeroMonedasIntroducidas) || numeroMonedasIntroducidas === 0) {
+        alert("Introduce un número de monedas válido");
+        return false;
+    }
+
     //Creamos una variable al que se le asigna el elemento de html con dicho ID.
     let botonIntroducirElement = document.getElementById('botonIntroducirMonedas');
     //Deshabilitamos el botón en el momento en que hacemos click en introducir (onClick)
     botonIntroducirElement.disabled = true;
 
-    /* Creamos la variable al que se le asigna el número de monedas introducidas.
-    Se emplea el método parseInt porque el número introducido es un string. */
-    let numeroMonedasIntroducidas = parseInt(document.getElementById('numeroMonedasIntroducidas').value);
     console.log('Número de monedas introducidas', numeroMonedasIntroducidas);
     numeroMonedasActual = numeroMonedasActual + numeroMonedasIntroducidas;
     console.log('Número de monedas actual', numeroMonedasActual);
@@ -36,25 +42,27 @@ function introducirMonedas() {
     numeroMonedasIntroducidasElement.value = 0;
 }
 
+//Método para mostrar el número de monedas por pantalla.
 function mostrarNumeroMonedasActuales() {
     document.getElementById('numMonedasActuales').innerHTML = numeroMonedasActual;
 }
 
 function salir() {
+    //Cuando damos a salir, se retiran las monedas,que son las acumuladas al finalizar el juego.
     alert('Has conseguido un total de ' + numeroMonedasActual + ' monedas.');
+    añadirMensaje('Has conseguido ' + numeroMonedasActual + ' monedas.')
 
+    //Las monedas ganadas se retiran a la entrada
     document.getElementById('numeroMonedasIntroducidas').value = numeroMonedasActual;
-    numeroMonedasActual = 0;
+    numeroMonedasActual = 0; //Igualamos en este instante las monedas a 0.
     mostrarNumeroMonedasActuales();
-    console.log('Número de monedas actual', numeroMonedasActual);
+    //console.log('Número de monedas actual', numeroMonedasActual);
 
     let botonVolverIntroducirMonedas = document.getElementById('botonIntroducirMonedas');
-    botonVolverIntroducirMonedas.disabled = false;
+    botonVolverIntroducirMonedas.disabled = false; //Activamos el botón de introducir
 
     let numeroMonedasIntroducidasElement = document.getElementById('numeroMonedasIntroducidas');
-    numeroMonedasIntroducidasElement.disabled = false;
-
-
+    numeroMonedasIntroducidasElement.disabled = false; //Activamos la casilla para introducir más monedas
 }
 
 function añadirMensaje(mensajeTexto) {
@@ -62,46 +70,49 @@ function añadirMensaje(mensajeTexto) {
     let mensajeElement = document.createElement('li');//Item del ol
     mensajeElement.innerHTML = mensajeTexto; //El mensaje que le pasamos por parámetro cuando llamamos a la función.
 
-    historialElement.appendChild(mensajeElement);//Se añade el nodo li en el padre ol (historial de movimientos).
+    historialElement.prepend(mensajeElement);//Se añade el nodo li en el padre ol (historial de movimientos).
+    //Por usabilidad y facilidad de lectura, he elegido prepend en lugar de appendChild.
 }
-
+//Función para bajar la palanca.
 function bajarPalanca() {
+    //Si no se introduce monedas, salta el alert().
     if (numeroMonedasActual === 0) {
         alert('Por favor, introduce monedas.');
         return;
     }
+    //Cada tirada gasta una moneda y se muestra por pantalla
     numeroMonedasActual = numeroMonedasActual - 1;
-    mostrarNumeroMonedasActuales();
+    // mostrarNumeroMonedasActuales();
 
+    //Si se agotan las monedas, se habilita el botón de introducir.
     if (numeroMonedasActual === 0) {
         document.getElementById('botonIntroducirMonedas').disabled = false;
     }
 
-    añadirMensaje('Gastas una moneda');
+    añadirMensaje('Gastas una moneda');//Mostramos en el historial el mensaje.
 
     console.log('palancaDown')
     let palancaImageElement = document.getElementById('palanca');
-    palancaImageElement.src = "/img/palancaDOWN.png";
+    palancaImageElement.src = "/img/palancaDOWN.png"; //Cambiamos la imagen de la palanca cuando hacemos click en ella
 }
 
 function subirPalanca() {
+    //Cuando soltamos click, la imagen se cambia para mostrar la palanca hacia arriba.
     let palancaImageElement = document.getElementById('palanca');
     palancaImageElement.src = "/img/palancaUP.png";
-    let aleatorio1 = Math.floor(Math.random() * listaImagenes.length);
-    let fruta1 = listaImagenes[aleatorio1];
-    // fruta1 = 'banana';
+    //Definimos la variable que es un número aletarorio para cada imagen.
+    let aleatorio1 = Math.floor(Math.random() * listaImagenes.length);//se obtiene con el método math.random
+    let fruta1 = listaImagenes[aleatorio1]; //El número aleatorio es un índice del array de imágenes.
     let imagen1 = document.getElementById('imagen1');
     imagen1.src = "/img/" + fruta1 + ".png";
 
     let aleatorio2 = Math.floor(Math.random() * listaImagenes.length);
     let fruta2 = listaImagenes[aleatorio2];
-    // fruta2 = 'banana';
     let imagen2 = document.getElementById('imagen2');
     imagen2.src = "/img/" + fruta2 + ".png";
 
     let aleatorio3 = Math.floor(Math.random() * listaImagenes.length);
     let fruta3 = listaImagenes[aleatorio3];
-    // fruta3 = 'banana';
     let imagen3 = document.getElementById('imagen3');
     imagen3.src = "/img/" + fruta3 + ".png";
 
@@ -174,7 +185,7 @@ function hayUnaSolaMoneda(img1, img2, img3) {
 }
 
 function hayExactamenteDosFrutasIguales(img1, img2, img3) {
-
+    //Creamos la variable tipo para después compararlas con las imágenes en el método hayExactamenteDosDeEsteTipo
     let tipo = '';
     for (let indice in listaFrutasYHortalizas) {
         tipo = listaFrutasYHortalizas[indice];
@@ -188,6 +199,7 @@ function hayExactamenteDosFrutasIguales(img1, img2, img3) {
     return false;
 }
 
+//Aquí reutilizamos la función del caso anterior
 function hayExactamenteTresFrutasIguales(img1, img2, img3) {
 
     let tipo = '';
@@ -228,6 +240,7 @@ function hayExactamenteTresDeEsteTipo(tipo, img1, img2, img3) {
     return false;
 }
 
+//Función cuando se ganan 3 monedas
 function hayTresMonedas(img1, img2, img3) {
 
     if (img1 === 'dollar' && img2 === 'dollar' && img3 === 'dollar') {
@@ -237,6 +250,7 @@ function hayTresMonedas(img1, img2, img3) {
     return false;
 }
 
+//Función cuando se ganan dos monedas.
 function hayDosMonedas(img1, img2, img3) {
 
     let moneda = 'dollar';
@@ -256,6 +270,7 @@ function hayDosMonedas(img1, img2, img3) {
     return false;
 }
 
+//Función cuando se gana una sola moneda.
 function hayUnaMoneda(img1, img2, img3) {
     if (img1 === 'dollar' || img2 === 'dollar' || img3 === 'dollar') {
         return true;

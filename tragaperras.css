@@ -19,3 +19,51 @@ div.t > input {
 .palanca {
     margin-left: 20px;
 }
+
+
+body {
+    font-family: Open Sans, fantasy;
+    color: deeppink;
+    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.99)), url("/fondo/monedas.jpeg");
+}
+
+/* Estilo del título */
+
+.titulo {
+    animation: blinker 1s linear infinite;
+    text-align: center;
+
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.historial {
+    padding: 1rem;
+    margin: auto;
+}
+
+.monedas {
+    margin: auto;
+
+}
+
+h2 {
+    text-align: center;
+}
+
+.introducirMonedas {
+    margin: auto;
+
+}
+
+.boton {
+    margin: auto;
+}
+
+#pantallas {
+    margin: auto;
+}
