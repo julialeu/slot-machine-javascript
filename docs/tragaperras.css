@@ -24,7 +24,7 @@ div.t > input {
 body {
     font-family: Open Sans, fantasy;
     color: deeppink;
-    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.99)), url("/docs/fondo/monedas.jpeg");
+    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.99)), url("/fondo/monedas.jpeg");
 }
 
 /* Estilo del título */
