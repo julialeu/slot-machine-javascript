@@ -82,7 +82,6 @@ function bajarPalanca() {
     }
     //Cada tirada gasta una moneda y se muestra por pantalla
     numeroMonedasActual = numeroMonedasActual - 1;
-    // mostrarNumeroMonedasActuales();
 
     //Si se agotan las monedas, se habilita el botón de introducir.
     if (numeroMonedasActual === 0) {
